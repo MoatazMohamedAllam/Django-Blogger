@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,3 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Configuration for crispy forms.
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+#after login redirect to home page
+LOGIN_REDIRECT_URL = 'blog:blog-home'
