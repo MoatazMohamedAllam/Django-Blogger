@@ -19,6 +19,7 @@ def home(request):
 def user_posts(request,username):
     user = get_object_or_404(User,username=username)
     posts = Post.objects.filter(author=user)
+
     context={
         'posts':posts
     }
