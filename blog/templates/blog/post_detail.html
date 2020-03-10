@@ -1,0 +1,63 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        {% if post.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'blog:update' post.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'blog:delete' post.id %}">Delete</a>
+          </div>
+          {% else %}
+            <h1 you can not update this post because you are not own it></h1>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">{{ post.content }}</p>
+    </div>
+  </article>
+
+  {% with comments.count as total_comments %}
+    <h1>{{ total_comments }} comment </h1>
+  {% endwith %}
+  
+  {% for comment in comments %}
+      <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ comment.profile.image.url }}">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2 text-primary" >{{ comment.profile.user.username }}</a>
+            <small class="text-muted">{{ comment.created }}</small>
+          </div>
+          <p class="article-content">{{ comment.body }}</p>
+        </div>
+      </article>
+    {% empty %}
+      <p>There are no comments yets.</p>
+  {% endfor %}
+    
+
+  
+  {% if post.author != user %}
+      <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add New Comment</legend>
+                <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                <span class="mr-2 text-primary">{{ user.username }}</span>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Add Comment</button>
+            </div>
+        </form>
+    </div>
+  {% endif %}
+    
+
+{% endblock %}

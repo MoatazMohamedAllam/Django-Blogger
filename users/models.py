@@ -12,8 +12,8 @@ class Profile(models.Model):
 
 #this is to override save method to force it
 #to save image with 300 height and 300 width for profile img
-    def save(self):
-        super().save()
+    def save(self,*args,**kwargs):
+        super(Profile,self).save(*args,**kwargs)
 
         img=Image.open(self.image.path)
 

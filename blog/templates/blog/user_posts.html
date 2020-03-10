@@ -7,7 +7,7 @@
         </a>
          <div class="media-body">
            <div class="article-metadata">
-             <a class="mr-2" href="{% url 'blog:user-posts' post.author%}">{{ post.author }}</a>
+             <a class="mr-2" href="{% url 'blog:user-posts' post.author %}">{{ post.author }}</a>
              <small class="text-muted">{{ post.date_posted | date }}</small>
            </div>
            <h2><a class="article-title" href="{% url 'blog:detail' post.id%}">{{ post.title }}</a></h2>
